@@ -1,0 +1,101 @@
+On veut créer une bibliothèque de fonctions pour manipuler des polynômes
+
+On donne ci-dessous une interface indicative, je vous laisse décider de sa 
+pertinence et éventuellement la modifier. On pourrait aussi discuter du fait que 
+je bride le degré des polynômes à une valeur fixe.
+
+Il faut fournir les programmes  de tests nécessaires.
+
+C'est une bibliothèque particulièrement utile. Une fois qu'on a des polynômes, on 
+peut travailler avec des fractions rationnelles dont on est très friand pour 
+modéliser les systèmes (fonctions de transfert).
+
+==================================================================================
+#define POLY_DEG_MAX	19
+
+typedef struct Poly {
+	int		n;						/* poly degree */
+	double	c[POLY_DEG_MAX+1];		/*poly coeff, beginning with the least degree */
+} Poly;
+
+/* calculate p(x) Horner's method
+   p(x)=a0+a1*x+a2*x^2+a3*x^3
+       = a0+(a1+(a2+(a3)*x)*x)*x
+*/
+double poly_eval(Poly *p, double x);
+
+/* initialization from a file 
+   format: n c0 c1 ... cn-1 \n
+*/
+int poly_read(File *file, Poly *p);
+
+/* initialize a polynom from the list of its coefficients 
+ *  ex: Poly p;
+ *      poly_new(&p, 3, 1.0, 2.0, 3.0, 1.0);
+ *      // p(x)=1+2*x+3*x^2+x^3
+ */
+void poly_new(Poly *p, int n, ...);
+
+/* display a polynom */
+void poly_display(Poly *p);
+
+/* return 0 if fail or 1 if success, pointer can be NULL */
+int poly_add(Poly *res, Poly *p1, Poly *p2);
+int poly_sub(Poly *res, Poly *p1, Poly *p2);
+int poly_mul(Poly *res, Poly *p1, Poly *p2);
+int poly_div(Poly *res, Poly *rem, Poly *p1, Poly *p2);
+==================================================================================
+
+Programmation de la généricité
+
+La construction `func(int a, ...)` permet de passer autant de paramètres qu'on veut
+à une fonction. Ils sont récupérés dans l'ordre d'apparition dans l'appel de la 
+fonction par la macro `va_arg()` dans laquelle on spécifie le type de la donnée à 
+récupérer.
+
+C'est le moyen fourni par le langage C pour exprimer la généricité : on peut passer 
+n'importe quel nombre de paramètres avec n'importe quel type.
+
+Ceci dit, la fonction doit savoir ou être en mesure de déterminer le type des 
+paramètres à récupérer. C'est la raison pour laquelle la fonction `printf` (qui 
+utilise ce mécanisme) a une chaîne de caractères qui sert à indiquer le formattage 
+des données (%d = entier, %s = chaîne de caractère, %c = caractère, %f = réel).
+
+Dans la fonction, en elle-même, on doit utiliser les macros suivantes :
+
+• `void va_start(va_list ap, param)` : la macro `va_start` fait pointer `ap` sur le premier argument variable fourni à la fonction. param est le nom du dernier argument nommé,
+• `type va_arg(va_list ap, type)` : la macro `va_arg` renvoie le premier argument variable et fait pointer `ap` sur l'argument suivant. `type` est le type de l'argument qui va être lu. La macro `va_arg` génère une expression de ce même type,
+• `void va_end(va_list ap)` : la macro `va_end` remet tout à état initial avant le retour à la fonction appelante.
+
+Un exemple d'utilisation de ces macros pour réaliser une somme quelconque d'entiers.
+
+/*  calcul de la somme de n entiers    */
+/*  le dernier argument doit être à 0  */
+#include <stdio.h>
+#include <stdarg.h>
+
+int somme(int n1, ...){
+  va_list ap;
+  int som, n;
+  
+  som = n1;
+  va_start(ap, n1);
+
+  while( (n = va_arg(ap, int)) != 0)
+    som = som + n;
+
+  va_end(ap);
+  return som;
+} 
+
+main(){
+  printf("1 + 3 + 5 + 7 + 9 = %d\n", somme(1,3,5,7,9,0));
+  printf("1 + 1 = %d\n", somme(1,1,0));
+  return 0;
+}
+
+
+/*-- résultat de l'exécution ----------------------------
+1 + 3 + 5 + 7 + 9 = 25
+1 + 1 = 2
+---------------------------------------------------------*/
