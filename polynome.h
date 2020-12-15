@@ -9,6 +9,6 @@ typedef struct Poly
 
 void printPoly(Poly);
 
-Poly addition_poly(Poly p1, Poly p2)
+Poly addition_poly(Poly p1, Poly p2);
 
 #endif

@@ -29,7 +29,7 @@ void printPoly(Poly poly)
     printf("\n");
 }
 
-addition_poly(Poly p1, Poly p2)
+Poly addition_poly(Poly p1, Poly p2)
 {
     Poly result;
 
