@@ -77,6 +77,54 @@ Poly create_poly(int nb_valeurs, double valeur1, ...)
     return poly;
 }
 
+Poly multiplication_poly(Poly p1, Poly p2)
+{
+    Poly multiplication;
+    // Coeff de plus haut degré du résultat cphd
+    int cphd = (p1.taille - 1) + (p2.taille - 1);
+    int d;
+    if (cphd > 10)
+    {
+        printf("\n#Error 404 Polynome NOT FOUND\n");
+        Poly error;
+        // Si le polynome est de trop haut degré on renvoit un polynome d'erreur de taille négative
+        error.taille = -1;
+        return error;
+    }
+    multiplication.taille=cphd+1;
+    for (int a1 = 0; a1 < p1.taille; a1++)
+    {
+        for (int a2 = 0; a2 < p2.taille; a2++)
+        {
+            // On fait une double boucle pour la double distributivitée
+            //On classe les valeurs obtenues par d, degré soit par l'addition de leur rang dans leur liste respective
+            d = a1 + a2;
+            multiplication.coef[d] = p1.coef[a1] * p2.coef[a2] + multiplication.coef[d];
+        }
+    }
+    return multiplication;
+}
+
+Poly create_empty(int taille)
+{
+    Poly poly;
+    poly.taille=taille;
+    for(int i=0;i<taille;i++)
+    {
+        poly.coef[i]=0;
+    }
+    return poly;
+}
+
+/*double calcul_valeur(double x,Poly poly)
+{
+    double value;
+    for(int i;i<poly.taille;i++)
+    {
+        value+=poly.coef[i]*(x^i);
+    }
+}*/
+
 /*void create_poly(double count, ...)
 {
 

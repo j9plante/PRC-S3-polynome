@@ -15,5 +15,9 @@ Poly soustraction_poly(Poly, Poly);
 
 Poly create_poly(int, double, ...);
 
+Poly multiplication_poly(Poly, Poly);
+
+Poly create_empty(int);
+
 
 #endif

@@ -30,23 +30,37 @@ void test_soustraction_poly(Poly p1, Poly p2)
     printPoly(p3);
 }
 
+void test_multiplication_poly(Poly p1, Poly p2)
+{
+    printf("\n~~~~ %s~~~~\n", __func__);
+
+    Poly p3 = multiplication_poly(p1, p2);
+
+    printPoly(p3);
+}
+
 int main(void)
 {
     int POLY_DEG_MAX = 10;
 
     //printf("Hello world \n");
-
-    Poly p1;
-    p1.taille = 3;
+    int tailleP1=5;
+    Poly p1=create_empty(tailleP1);
     p1.coef[0] = 2;
     p1.coef[1] = 0;
     p1.coef[2] = 4;
+    //p1.coef[3] = 6;
+    p1.coef[4] = 5;    
 
-    Poly p2;
-    p2.taille = 3;
+    int taileP2=3;
+    Poly p2=create_empty(taileP2);;
     p2.coef[0] = 6;
-    p2.coef[1] = 7.5;
-    p2.coef[2] = 5.2;
+    p2.coef[1] = 7;
+    p2.coef[2] = 5;
+
+    printPoly(p1);
+    printPoly(p2);
+
 
     //printPoly(p1);
     //printPoly(p2);
@@ -57,12 +71,14 @@ int main(void)
 
     //test_soustraction_poly(p1,p2);
 
+    test_multiplication_poly(p1, p2);
+
     //char text="2x^2+3x+3";
 
     //create_poly(1, 2, 3, 4, 5, 6, 7);
-    Poly p4;
+    /*Poly p4;
     p4=create_poly(3, 14.5, 18.0, 17.5);
-    printPoly(p4);
+    printPoly(p4);*/
 
     return 0;
 }
