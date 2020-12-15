@@ -13,4 +13,7 @@ Poly addition_poly(Poly, Poly);
 
 Poly soustraction_poly(Poly, Poly);
 
+Poly create_poly(int, double, ...);
+
+
 #endif

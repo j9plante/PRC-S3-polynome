@@ -1,5 +1,9 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <string.h>
+
+#include <stdarg.h>
+
 #include "polynome.h"
 
 void test_printPoly(Poly p1)
@@ -8,20 +12,20 @@ void test_printPoly(Poly p1)
     printPoly(p1);
 }
 
-void test_addition_poly(Poly p1,Poly p2)
+void test_addition_poly(Poly p1, Poly p2)
 {
-    printf("\n~~~~ %s~~~~\n", __func__);    
+    printf("\n~~~~ %s~~~~\n", __func__);
 
-    Poly p3=addition_poly(p1,p2);
+    Poly p3 = addition_poly(p1, p2);
 
     printPoly(p3);
 }
 
-void test_soustraction_poly(Poly p1,Poly p2)
+void test_soustraction_poly(Poly p1, Poly p2)
 {
-    printf("\n~~~~ %s~~~~\n", __func__);    
+    printf("\n~~~~ %s~~~~\n", __func__);
 
-    Poly p3=soustraction_poly(p1,p2);
+    Poly p3 = soustraction_poly(p1, p2);
 
     printPoly(p3);
 }
@@ -49,9 +53,16 @@ int main(void)
 
     //test_printPoly(p1);
 
-    test_addition_poly(p1,p2);
+    //test_addition_poly(p1,p2);
 
-    test_soustraction_poly(p1,p2);   
+    //test_soustraction_poly(p1,p2);
+
+    //char text="2x^2+3x+3";
+
+    //create_poly(1, 2, 3, 4, 5, 6, 7);
+    Poly p4;
+    p4=create_poly(3, 14.5, 18.0, 17.5);
+    printPoly(p4);
 
     return 0;
 }
