@@ -3,11 +3,7 @@
 #include "polynome.h"
 
 int main(void)
-{
-    //TEST COMMIT !!!!
-
-    //nhtrdfbhtfgh
-    
+{    
     int POLY_DEG_MAX=10;
     
     //printf("Hello world \n");    
