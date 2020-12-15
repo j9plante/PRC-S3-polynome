@@ -19,5 +19,8 @@ Poly multiplication_poly(Poly, Poly);
 
 Poly create_empty(int);
 
+double calcul_valeur(double,Poly);
+
+bool open_from_file(const char *, char *[]);
 
 #endif

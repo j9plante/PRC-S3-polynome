@@ -4,6 +4,8 @@
 
 #include <stdarg.h>
 
+#include <math.h>
+
 #include "polynome.h"
 
 void test_printPoly(Poly p1)
@@ -39,6 +41,26 @@ void test_multiplication_poly(Poly p1, Poly p2)
     printPoly(p3);
 }
 
+/*void test_calcul_valeur(double x,Poly p1)
+{
+    printf("\n~~~~ %s(%g)~~~~\n", __func__,x);
+
+    double result= calcul_valeur(x,p1);
+
+    printf("\nrésultat :%g\n",result);
+}*/
+
+void test_open_from_file(void)
+{
+    printf("\n~~~~ %s~~~~\n", __func__);
+    char poly[150];
+
+    bool result=open_from_file("TEST.txt", *poly);
+
+    printf("\nrésultat :%d\n",result);
+    printf("\nrésultat :%s\n",*poly);
+}
+
 int main(void)
 {
     int POLY_DEG_MAX = 10;
@@ -50,7 +72,7 @@ int main(void)
     p1.coef[1] = 0;
     p1.coef[2] = 4;
     //p1.coef[3] = 6;
-    p1.coef[4] = 5;    
+    p1.coef[4] = 5;   
 
     int taileP2=3;
     Poly p2=create_empty(taileP2);;
@@ -58,8 +80,8 @@ int main(void)
     p2.coef[1] = 7;
     p2.coef[2] = 5;
 
-    printPoly(p1);
-    printPoly(p2);
+    //printPoly(p1);
+    //printPoly(p2);
 
 
     //printPoly(p1);
@@ -71,7 +93,13 @@ int main(void)
 
     //test_soustraction_poly(p1,p2);
 
-    test_multiplication_poly(p1, p2);
+    //test_multiplication_poly(p1, p2);
+
+    //test_calcul_valeur(4,p1);
+
+    test_open_from_file();
+
+    //printf("%g", powf(3.5,2.5));
 
     //char text="2x^2+3x+3";
 

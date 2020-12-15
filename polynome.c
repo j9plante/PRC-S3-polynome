@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
+#include <math.h>
 
 #include <stdarg.h>
 #include "polynome.h"
@@ -91,7 +92,7 @@ Poly multiplication_poly(Poly p1, Poly p2)
         error.taille = -1;
         return error;
     }
-    multiplication.taille=cphd+1;
+    multiplication.taille = cphd + 1;
     for (int a1 = 0; a1 < p1.taille; a1++)
     {
         for (int a2 = 0; a2 < p2.taille; a2++)
@@ -108,12 +109,30 @@ Poly multiplication_poly(Poly p1, Poly p2)
 Poly create_empty(int taille)
 {
     Poly poly;
-    poly.taille=taille;
-    for(int i=0;i<taille;i++)
+    poly.taille = taille;
+    for (int i = 0; i < taille; i++)
     {
-        poly.coef[i]=0;
+        poly.coef[i] = 0.0;
     }
     return poly;
+}
+
+bool open_from_file(const char *filename, char poly[])
+{
+    FILE *f = fopen(filename, "r");
+    if (!f)
+    {
+        return false;
+    }
+
+    //char poly[150];
+    if (f != NULL)
+    {
+        fscanf(f, "%s", poly[0]);
+    }
+
+    fclose(f);
+    return true;
 }
 
 /*double calcul_valeur(double x,Poly poly)
@@ -121,8 +140,9 @@ Poly create_empty(int taille)
     double value;
     for(int i;i<poly.taille;i++)
     {
-        value+=poly.coef[i]*(x^i);
+        value+=poly.coef[i]*(pow(x,i));
     }
+    return value;
 }*/
 
 /*void create_poly(double count, ...)
