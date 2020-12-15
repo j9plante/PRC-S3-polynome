@@ -4,6 +4,8 @@
 
 void printPoly(Poly poly)
 {
+    
+    
     printf("Fonction : %s", __func__);
     printf("\n");
     for (int i=poly.taille; i >=0; i--)
