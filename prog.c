@@ -61,6 +61,16 @@ void test_calcul_valeur(double x,Poly p1)
     printf("\nrésultat :%s\n",*poly);
 }*/
 
+void test_get_poly_from_str(void)
+{
+    printf("\n~~~~ %s~~~~\n", __func__);
+    char str[]="10x^(3)+5x^(2)+7x^(1)+6x^(0)";
+    Poly result= get_poly_from_str(str);
+
+    printPoly(result);
+}
+
+
 int main(void)
 {
     int POLY_DEG_MAX = 10;
@@ -76,9 +86,9 @@ int main(void)
 
     int taileP2=3;
     Poly p2=create_empty(taileP2);
-    /*p2.coef[0] = 6;
+    p2.coef[0] = 6;
     p2.coef[1] = 7;
-    p2.coef[2] = 5;*/
+    p2.coef[2] = 5;
 
     //printPoly(p1);
     //printPoly(p2);
@@ -93,7 +103,9 @@ int main(void)
 
     //test_soustraction_poly(p1,p2);
 
-    test_multiplication_poly(p1, p2);
+    //test_multiplication_poly(p1, p2);
+
+    test_get_poly_from_str();
 
     //test_calcul_valeur(4,p2);
 

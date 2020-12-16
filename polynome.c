@@ -80,7 +80,7 @@ Poly create_poly(int nb_valeurs, double valeur1, ...)
 
 Poly multiplication_poly(Poly p1, Poly p2)
 {
-    Poly multiplication ;
+    Poly multiplication;
     // Coeff de plus haut degré du résultat cphd
     int cphd = (p1.taille - 1) + (p2.taille - 1);
     int d;
@@ -92,7 +92,7 @@ Poly multiplication_poly(Poly p1, Poly p2)
         error.taille = -1;
         return error;
     }
-    multiplication=create_empty(cphd+1);
+    multiplication = create_empty(cphd + 1);
     multiplication.taille = cphd + 1;
     for (int a1 = 0; a1 < p1.taille; a1++)
     {
@@ -118,6 +118,45 @@ Poly create_empty(int taille)
     return poly;
 }
 
+Poly get_poly_from_str(char str[])
+{
+    //char str[] = "10x^(3)+5x^(2)+7x^(1)+6x^(0)";
+    char delim[] = "+";
+
+    double poly[10] = {0};
+    int rang;
+    double coef;
+
+    
+    char *ptr = strtok(str, delim);
+    while (ptr != NULL)
+    {
+        //printf("%s\n", ptr);
+        sscanf(ptr, "%lf x^(%d)", &coef, &rang);
+
+        poly[rang] = coef;
+        ptr = strtok(NULL, delim);
+    }
+
+    /*for (int i = 0; i < 10; i++)
+    {
+        printf("\n rang : %d coef : %g \n", i, poly[i]);
+    }
+    printf("\n");*/
+
+    Poly p1=create_empty(10);
+
+    p1.taille=10;
+    for(int i=0;i<p1.taille;i++)
+    {
+        p1.coef[i]=poly[i];
+    }
+
+    //printPoly(p1);
+
+    return p1;
+}
+
 /*bool open_from_file(const char *filename, char poly[])
 {
     FILE *f = fopen(filename, "r");
@@ -141,9 +180,9 @@ double calcul_valeur(double x, Poly poly)
     //Nécéssite l'ajout de -lm (librairie math) dans le makefile pour l'édition des liens (BINFLAGS+=-g -O0 -lm) (pow())
     double value;
 
-    for(int i=0; i<poly.taille; i++)
+    for (int i = 0; i < poly.taille; i++)
     {
-        value+=poly.coef[i]*pow(x,i);
+        value += poly.coef[i] * pow(x, i);
     }
 
     return value;

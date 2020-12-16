@@ -23,4 +23,6 @@ double calcul_valeur(double,Poly);
 
 bool open_from_file(const char *, char *[]);
 
+Poly get_poly_from_str(char[]);
+
 #endif
