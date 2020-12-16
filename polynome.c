@@ -117,7 +117,7 @@ Poly create_empty(int taille)
     return poly;
 }
 
-bool open_from_file(const char *filename, char poly[])
+/*bool open_from_file(const char *filename, char poly[])
 {
     FILE *f = fopen(filename, "r");
     if (!f)
@@ -133,17 +133,20 @@ bool open_from_file(const char *filename, char poly[])
 
     fclose(f);
     return true;
-}
-
-/*double calcul_valeur(double x,Poly poly)
-{
-    double value;
-    for(int i;i<poly.taille;i++)
-    {
-        value+=poly.coef[i]*(pow(x,i));
-    }
-    return value;
 }*/
+
+double calcul_valeur(double x, Poly poly)
+{
+    //Nécéssite l'ajout de -lm dans le makefile pour l'édition des liens (BINFLAGS+=-g -O0 -lm)
+    double value;
+
+    for(int i=0; i<poly.taille; i++)
+    {
+        value+=poly.coef[i]*pow(x,i);
+    }
+
+    return value;
+}
 
 /*void create_poly(double count, ...)
 {

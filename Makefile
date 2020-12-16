@@ -128,6 +128,7 @@ GENERATED_FILES+=${wildcard output_* *~}
 CPPFLAGS+=-MMD -pedantic -Wall -Wextra -Wconversion
 CPPFLAGS+=-Wno-unused -Wno-unused-parameter -Werror -Wfatal-errors
 CFLAGS+=-std=c99 -Wc++-compat -Wwrite-strings -Wold-style-definition -Wvla
+#LIBS += -lm
 CXXFLAGS+=-std=c++17
 CXXFLAGS+=-Wno-missing-braces -Wno-sign-conversion
 LDFLAGS+=
@@ -168,7 +169,7 @@ ifneq (${strip ${opt}},0)
   endif
 else
   CPPFLAGS+=-UNDEBUG
-  BINFLAGS+=-g -O0
+  BINFLAGS+=-g -O0 -lm
   ifeq (${strip ${wasm}},1)
     # sanitizer is not available yet with Emscripten
   else ifneq (,${findstring Windows_NT,${OS}})

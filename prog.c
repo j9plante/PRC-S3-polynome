@@ -41,16 +41,16 @@ void test_multiplication_poly(Poly p1, Poly p2)
     printPoly(p3);
 }
 
-/*void test_calcul_valeur(double x,Poly p1)
+void test_calcul_valeur(double x,Poly p1)
 {
     printf("\n~~~~ %s(%g)~~~~\n", __func__,x);
 
     double result= calcul_valeur(x,p1);
 
     printf("\nrésultat :%g\n",result);
-}*/
+}
 
-void test_open_from_file(void)
+/*void test_open_from_file(void)
 {
     printf("\n~~~~ %s~~~~\n", __func__);
     char poly[150];
@@ -59,7 +59,7 @@ void test_open_from_file(void)
 
     printf("\nrésultat :%d\n",result);
     printf("\nrésultat :%s\n",*poly);
-}
+}*/
 
 int main(void)
 {
@@ -95,9 +95,9 @@ int main(void)
 
     //test_multiplication_poly(p1, p2);
 
-    //test_calcul_valeur(4,p1);
+    test_calcul_valeur(4,p2);
 
-    test_open_from_file();
+    //test_open_from_file();
 
     //printf("%g", powf(3.5,2.5));
 
