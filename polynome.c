@@ -229,3 +229,22 @@ double calcul_valeur(double x, Poly poly)
 /*Poly parsseur(char *)
 {
 }*/
+
+
+bool get_string_from_file(const char *Filename, char* contenu)
+{
+    bool ret = false;
+    if (contenu != NULL)
+    {
+        FILE *f = fopen(Filename, "r");
+        if (f)
+        {
+            fgets(contenu, sizeof(contenu), f); // On lit maximum la taille du buffer du fichier, on stocke le tout dans le buffer contenu
+            printf("%s", contenu);        // On affiche la chaîne
+
+            fclose(f);
+            ret = true;
+        }
+    }   
+    return ret;
+}
