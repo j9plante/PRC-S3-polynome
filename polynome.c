@@ -80,7 +80,7 @@ Poly create_poly(int nb_valeurs, double valeur1, ...)
 
 Poly multiplication_poly(Poly p1, Poly p2)
 {
-    Poly multiplication;
+    Poly multiplication ;
     // Coeff de plus haut degré du résultat cphd
     int cphd = (p1.taille - 1) + (p2.taille - 1);
     int d;
@@ -92,6 +92,7 @@ Poly multiplication_poly(Poly p1, Poly p2)
         error.taille = -1;
         return error;
     }
+    multiplication=create_empty(cphd+1);
     multiplication.taille = cphd + 1;
     for (int a1 = 0; a1 < p1.taille; a1++)
     {
@@ -110,7 +111,7 @@ Poly create_empty(int taille)
 {
     Poly poly;
     poly.taille = taille;
-    for (int i = 0; i < taille; i++)
+    for (int i = 0; i < 10; i++)
     {
         poly.coef[i] = 0.0;
     }
@@ -137,7 +138,7 @@ Poly create_empty(int taille)
 
 double calcul_valeur(double x, Poly poly)
 {
-    //Nécéssite l'ajout de -lm dans le makefile pour l'édition des liens (BINFLAGS+=-g -O0 -lm)
+    //Nécéssite l'ajout de -lm (librairie math) dans le makefile pour l'édition des liens (BINFLAGS+=-g -O0 -lm) (pow())
     double value;
 
     for(int i=0; i<poly.taille; i++)

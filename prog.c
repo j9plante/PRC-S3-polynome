@@ -72,13 +72,13 @@ int main(void)
     p1.coef[1] = 0;
     p1.coef[2] = 4;
     //p1.coef[3] = 6;
-    p1.coef[4] = 5;   
+    p1.coef[4] = 5; 
 
     int taileP2=3;
-    Poly p2=create_empty(taileP2);;
-    p2.coef[0] = 6;
+    Poly p2=create_empty(taileP2);
+    /*p2.coef[0] = 6;
     p2.coef[1] = 7;
-    p2.coef[2] = 5;
+    p2.coef[2] = 5;*/
 
     //printPoly(p1);
     //printPoly(p2);
@@ -93,9 +93,9 @@ int main(void)
 
     //test_soustraction_poly(p1,p2);
 
-    //test_multiplication_poly(p1, p2);
+    test_multiplication_poly(p1, p2);
 
-    test_calcul_valeur(4,p2);
+    //test_calcul_valeur(4,p2);
 
     //test_open_from_file();
 
