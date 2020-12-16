@@ -108,7 +108,7 @@ int main(void)
 
     //test_soustraction_poly(p1,p2);
 
-    //test_multiplication_poly(p1, p2);
+    test_multiplication_poly(p1, p2);
 
     //test_get_poly_from_str();
 
