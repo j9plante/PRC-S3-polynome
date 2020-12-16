@@ -127,32 +127,28 @@ Poly get_poly_from_str(char str[])
     int rang;
     double coef;
 
+    int max=0;
     
     char *ptr = strtok(str, delim);
     while (ptr != NULL)
     {
         //printf("%s\n", ptr);
         sscanf(ptr, "%lf x^(%d)", &coef, &rang);
-
+        if (rang>max)
+        {
+            max=rang;
+        }
         poly[rang] = coef;
         ptr = strtok(NULL, delim);
     }
 
-    /*for (int i = 0; i < 10; i++)
-    {
-        printf("\n rang : %d coef : %g \n", i, poly[i]);
-    }
-    printf("\n");*/
-
     Poly p1=create_empty(10);
 
-    p1.taille=10;
+    p1.taille=max+1;
     for(int i=0;i<p1.taille;i++)
     {
         p1.coef[i]=poly[i];
     }
-
-    //printPoly(p1);
 
     return p1;
 }
