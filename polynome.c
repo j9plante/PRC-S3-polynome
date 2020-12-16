@@ -127,30 +127,67 @@ Poly get_poly_from_str(char str[])
     int rang;
     double coef;
 
-    int max=0;
-    
+    int max = 0;
+
     char *ptr = strtok(str, delim);
     while (ptr != NULL)
     {
         //printf("%s\n", ptr);
         sscanf(ptr, "%lf x^(%d)", &coef, &rang);
-        if (rang>max)
+        if (rang > max)
         {
-            max=rang;
+            max = rang;
         }
         poly[rang] = coef;
         ptr = strtok(NULL, delim);
     }
 
-    Poly p1=create_empty(10);
+    Poly p1 = create_empty(10);
 
-    p1.taille=max+1;
-    for(int i=0;i<p1.taille;i++)
+    p1.taille = max + 1;
+    for (int i = 0; i < p1.taille; i++)
     {
-        p1.coef[i]=poly[i];
+        p1.coef[i] = poly[i];
     }
 
     return p1;
+}
+
+void poly_to_file(const char * filename,Poly poly)
+{
+    //printf("\n~~~~ %s(%s) ~~~~\n", __func__, fileName);
+    FILE *f = fopen(filename, "w");
+    if (!f)
+    {
+        fprintf(stderr, "cannot open %s\n", filename);
+        return;
+    }
+
+
+    fprintf(f,"\n");
+    for (int i = poly.taille - 1; i >= 0; i--)
+    {
+        //printf("%d",i);
+        if (poly.coef[i] != 0)
+        {
+            if (i == 0)
+            {
+                fprintf(f,"%g", poly.coef[i]);
+            }
+            else
+            {
+                fprintf(f,"%gx^(%d)", poly.coef[i], i);
+            }
+
+            if (i != 0 && poly.coef[i] > 0)
+            {
+                fprintf(f,"+");
+            }
+        }
+    }
+    fprintf(f,"\n");
+
+    fclose(f);
 }
 
 /*bool open_from_file(const char *filename, char poly[])

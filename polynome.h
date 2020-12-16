@@ -25,4 +25,6 @@ bool open_from_file(const char *, char *[]);
 
 Poly get_poly_from_str(char[]);
 
+void poly_to_file(const char *,Poly);
+
 #endif

@@ -41,13 +41,13 @@ void test_multiplication_poly(Poly p1, Poly p2)
     printPoly(p3);
 }
 
-void test_calcul_valeur(double x,Poly p1)
+void test_calcul_valeur(double x, Poly p1)
 {
-    printf("\n~~~~ %s(%g)~~~~\n", __func__,x);
+    printf("\n~~~~ %s(%g)~~~~\n", __func__, x);
 
-    double result= calcul_valeur(x,p1);
+    double result = calcul_valeur(x, p1);
 
-    printf("\nrésultat :%g\n",result);
+    printf("\nrésultat :%g\n", result);
 }
 
 /*void test_open_from_file(void)
@@ -64,35 +64,40 @@ void test_calcul_valeur(double x,Poly p1)
 void test_get_poly_from_str(void)
 {
     printf("\n~~~~ %s~~~~\n", __func__);
-    char str[]="10x^(3)+5x^(2)+7x^(1)+6x^(0)";
-    Poly result= get_poly_from_str(str);
+    char str[] = "10x^(3)+5x^(2)+7x^(1)+6x^(0)";
+    Poly result = get_poly_from_str(str);
 
     printPoly(result);
 }
 
+void test_poly_to_file(Poly p1)
+{
+    printf("\n~~~~ %s~~~~\n", __func__);
+    poly_to_file("test1.txt", p1);
+    //printPoly(p1);
+}
 
 int main(void)
 {
     int POLY_DEG_MAX = 10;
 
     //printf("Hello world \n");
-    int tailleP1=5;
-    Poly p1=create_empty(tailleP1);
+    int tailleP1 = 5;
+    Poly p1 = create_empty(tailleP1);
     p1.coef[0] = 2;
     p1.coef[1] = 0;
     p1.coef[2] = 4;
     //p1.coef[3] = 6;
-    p1.coef[4] = 5; 
+    p1.coef[4] = 5;
 
-    int taileP2=3;
-    Poly p2=create_empty(taileP2);
+    int taileP2 = 3;
+    Poly p2 = create_empty(taileP2);
     p2.coef[0] = 6;
     p2.coef[1] = 7;
     p2.coef[2] = 5;
 
     //printPoly(p1);
     //printPoly(p2);
-
 
     //printPoly(p1);
     //printPoly(p2);
@@ -105,11 +110,13 @@ int main(void)
 
     //test_multiplication_poly(p1, p2);
 
-    test_get_poly_from_str();
+    //test_get_poly_from_str();
 
     //test_calcul_valeur(4,p2);
 
     //test_open_from_file();
+
+    test_poly_to_file(p1);
 
     //printf("%g", powf(3.5,2.5));
 
