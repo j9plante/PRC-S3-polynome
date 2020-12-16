@@ -239,8 +239,8 @@ bool get_string_from_file(const char *Filename, char* contenu)
         FILE *f = fopen(Filename, "r");
         if (f)
         {
-            fgets(contenu, sizeof(contenu), f); // On lit maximum la taille du buffer du fichier, on stocke le tout dans le buffer contenu
-            printf("%s", contenu);        // On affiche la chaîne
+            fgets(contenu, 100/*sizeof(contenu)*/, f); // On lit maximum la taille du buffer du fichier, on stocke le tout dans le buffer contenu
+            printf("\n%s\n", contenu);        // On affiche la chaîne
 
             fclose(f);
             ret = true;

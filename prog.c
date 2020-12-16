@@ -108,7 +108,7 @@ int main(void)
 
     //test_soustraction_poly(p1,p2);
 
-    test_multiplication_poly(p1, p2);
+    //test_multiplication_poly(p1, p2);
 
     //test_get_poly_from_str();
 
@@ -116,7 +116,10 @@ int main(void)
 
     //test_open_from_file();
 
-    test_poly_to_file(p1);
+    //test_poly_to_file(p1);
+    char contenu[200];
+    get_string_from_file("test1.txt",contenu);
+
 
     //printf("%g", powf(3.5,2.5));
 
