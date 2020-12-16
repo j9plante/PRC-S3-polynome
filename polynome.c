@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
-#include <math.h>
 
 #include <stdarg.h>
 #include "polynome.h"
@@ -77,120 +76,34 @@ Poly create_poly(int nb_valeurs, double valeur1, ...)
 
     return poly;
 }
-
 Poly multiplication_poly(Poly p1, Poly p2)
 {
     Poly multiplication;
-    // Coeff de plus haut degré du résultat cphd
-    int cphd = (p1.taille - 1) + (p2.taille - 1);
-    int d;
-    if (cphd > 10)
+    // Coeff de plus haut degré cphd
+    int cphd = p1.coef[p1.taille - 1] + p2.coef[p2.taille - 2];
+
+    if (cphd > POLY_DEG_MAX)
     {
-        printf("\n#Error 404 Polynome NOT FOUND\n");
+        printf("#Error 404 Polynome NOT FOUND");
         Poly error;
         // Si le polynome est de trop haut degré on renvoit un polynome d'erreur de taille négative
         error.taille = -1;
-        return error;
+        return error
     }
-    multiplication = create_empty(cphd + 1);
-    multiplication.taille = cphd + 1;
-    for (int a1 = 0; a1 < p1.taille; a1++)
+    for (int a1 = 0; a1 < p1.coeff[p1.taille - 1]; a1++)
     {
-        for (int a2 = 0; a2 < p2.taille; a2++)
+        for (int a2 = 0; a2 < p2.coef[p2.taille - 1]; a2++)
         {
             // On fait une double boucle pour la double distributivitée
             //On classe les valeurs obtenues par d, degré soit par l'addition de leur rang dans leur liste respective
-            d = a1 + a2;
-            multiplication.coef[d] = p1.coef[a1] * p2.coef[a2] + multiplication.coef[d];
+            d = a1[i] + a2[i];
+            multiplication.coeff[d] = p1.coeff[a1] * p2.coeff[a2] + multiplication.coeff[d];
         }
     }
     return multiplication;
 }
 
-Poly create_empty(int taille)
-{
-    Poly poly;
-    poly.taille = taille;
-    for (int i = 0; i < 10; i++)
-    {
-        poly.coef[i] = 0.0;
-    }
-    return poly;
-}
-
-Poly get_poly_from_str(char str[])
-{
-    //char str[] = "10x^(3)+5x^(2)+7x^(1)+6x^(0)";
-    char delim[] = "+";
-
-    double poly[10] = {0};
-    int rang;
-    double coef;
-
-    int max = 0;
-
-    char *ptr = strtok(str, delim);
-    while (ptr != NULL)
-    {
-        //printf("%s\n", ptr);
-        sscanf(ptr, "%lf x^(%d)", &coef, &rang);
-        if (rang > max)
-        {
-            max = rang;
-        }
-        poly[rang] = coef;
-        ptr = strtok(NULL, delim);
-    }
-
-    Poly p1 = create_empty(10);
-
-    p1.taille = max + 1;
-    for (int i = 0; i < p1.taille; i++)
-    {
-        p1.coef[i] = poly[i];
-    }
-
-    return p1;
-}
-
-void poly_to_file(const char * filename,Poly poly)
-{
-    //printf("\n~~~~ %s(%s) ~~~~\n", __func__, fileName);
-    FILE *f = fopen(filename, "w");
-    if (!f)
-    {
-        fprintf(stderr, "cannot open %s\n", filename);
-        return;
-    }
-
-
-    fprintf(f,"\n");
-    for (int i = poly.taille - 1; i >= 0; i--)
-    {
-        //printf("%d",i);
-        if (poly.coef[i] != 0)
-        {
-            if (i == 0)
-            {
-                fprintf(f,"%g", poly.coef[i]);
-            }
-            else
-            {
-                fprintf(f,"%gx^(%d)", poly.coef[i], i);
-            }
-
-            if (i != 0 && poly.coef[i] > 0)
-            {
-                fprintf(f,"+");
-            }
-        }
-    }
-    fprintf(f,"\n");
-
-    fclose(f);
-}
-
-/*bool open_from_file(const char *filename, char poly[])
+bool open_from_file(const char *filename, char **poly[150])
 {
     FILE *f = fopen(filename, "r");
     if (!f)
@@ -198,27 +111,14 @@ void poly_to_file(const char * filename,Poly poly)
         return false;
     }
 
-    //char poly[150];
-    if (f != NULL)
+    char poly[150];
+    if (f != NOT NULL)
     {
         fscanf(f, "%s", poly[0]);
     }
 
     fclose(f);
     return true;
-}*/
-
-double calcul_valeur(double x, Poly poly)
-{
-    //Nécéssite l'ajout de -lm (librairie math) dans le makefile pour l'édition des liens (BINFLAGS+=-g -O0 -lm) (pow())
-    double value;
-
-    for (int i = 0; i < poly.taille; i++)
-    {
-        value += poly.coef[i] * pow(x, i);
-    }
-
-    return value;
 }
 
 /*void create_poly(double count, ...)
@@ -229,3 +129,22 @@ double calcul_valeur(double x, Poly poly)
 /*Poly parsseur(char *)
 {
 }*/
+char get_string_from_file(const char *Filename)
+{
+    FILE *f = NULL;
+    FILE *f = fopen(fileName, "r");
+    if (!f)
+    {
+        return NULL;
+    }
+
+    char contenu[210] = ""; // Chaîne vide de taille 210
+
+    if (f != NULL)
+    {
+        fgets(contenu, 200, f); // On lit maximum 200 caractères du fichier, on stocke le tout dans la str contenu
+        printf("%s", contenu);        // On affiche la chaîne
+
+        fclose(fichier);
+    }
+}
