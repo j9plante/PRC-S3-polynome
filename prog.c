@@ -54,17 +54,6 @@ void test_calcul_valeur(double x, Poly p1)
     printf("\nrésultat :%g\n", result);
 }
 
-/*void test_open_from_file(void)
-{
-    printf("\n~~~~ %s~~~~\n", __func__);
-    char poly[150];
-
-    bool result=open_from_file("TEST.txt", *poly);
-
-    printf("\nrésultat :%d\n",result);
-    printf("\nrésultat :%s\n",*poly);
-}*/
-
 void test_create_poly(void)
 {
     printf("\n~~~~ %s~~~~\n", __func__);
@@ -88,10 +77,14 @@ void test_poly_to_file(Poly p1)
     //printPoly(p1);
 }
 
+void test_get_str_from_file(void)
+{
+    get_string_from_file("input.txt");
+}
+
 int main(int argc, char **argv)
 {
-
-    //printf("Hello world \n");
+    //On définit les polynomes utilisé pour les tests :
     int tailleP1 = 5;
     Poly p1 = create_empty(tailleP1);
     p1.coef[0] = 2;
@@ -106,15 +99,19 @@ int main(int argc, char **argv)
     p2.coef[1] = 7;
     p2.coef[2] = 5;
 
+    //Notice d'utilisation :
     if (argc == 1)
     {
         printf("\nPour effectuer tout les tests : all");
+        printf("\n-Pour saisir un polynome : poly poly1");
         printf("\n-Pour additionner 2 polynomes : poly1 add poly2");
         printf("\n-Pour soustraire 2 polynomes : poly1 sous poly2");
         printf("\n-Pour multiplier 2 polynomes : poly1 multi poly2");
+        printf("\n-Pour calculer la valeur d'un polynome en un point : calc x poly1");
         printf("\n-Formatage des polynomes ax^n+bx^n-1+...+c\n");
+        printf("\nATENTION : degré max=10\n");
     }
-
+    // Si le seul argument reçu est "all" : on lance toutes les fonctions de test
     if (argc == 2 && strcmp(argv[1], "all") == 0)
     {
         printf("On fait touts les tests !!");
@@ -127,13 +124,15 @@ int main(int argc, char **argv)
         test_get_poly_from_str();
         test_calcul_valeur(4, p2);
         test_poly_to_file(p1);
+        test_get_str_from_file();
     }
-    if (argc == 2)
+    //Si on saisit poly, on extrait le polynome saisit :
+    if (argc == 3 && strcmp(argv[1], "poly") == 0)
     {
-        Poly p3 = get_poly_from_str(argv[1]);
+        Poly p3 = get_poly_from_str(argv[2]);
         printPoly(p3);
     }
-
+    //On additonne les polynomes saisits:
     if (argc == 4 && strcmp(argv[2], "add") == 0)
     {
         printf("Add command line");
@@ -161,46 +160,16 @@ int main(int argc, char **argv)
         printPoly(multiplication_poly(p4, p5));
     }
 
-    int POLY_DEG_MAX = 10;
+    if (argc == 4 && strcmp(argv[1], "calc") == 0)
+    {
+        printf("Calc command line");
+        double x;
+        sscanf(argv[2],"%lf",&x);
+        printf("\n%g\n",x);
+        Poly p5 = get_poly_from_str(argv[3]);
 
-    //printPoly(p1);
-    //printPoly(p2);
-
-    //printPoly(p1);
-    //printPoly(p2);
-
-    //test_printPoly(p1);
-
-    //test_addition_poly(p1,p2);
-
-    //test_soustraction_poly(p1,p2);
-
-    //test_multiplication_poly(p1, p2);
-
-    //test_get_poly_from_str();
-
-    //test_calcul_valeur(4,p2);
-
-    //test_open_from_file();
-
-    //test_poly_to_file(p1);
-    //char contenu[200];
-    //get_string_from_file("test1.txt",contenu);
-
-    //printf("%g", powf(3.5,2.5));
-
-    //char text="2x^2+3x+3";
-
-    //Poly p3 = create_poly(6, 2, 3, 4, 5, 6, 7);
-    //printPoly(p3);
-    Poly p4;
-    p4=create_poly(3, 14.5, 18.0, 17.5);
-    printPoly(p4);
-
-    //char ** content=get_string_from_file("test1.txt");
-
-    //printf("%s",*content)
-    //free(content);
+        printf("\nRésultat : %g\n",calcul_valeur(x,p5));
+    }
 
     return 0;
 }

@@ -39,8 +39,10 @@ Poly addition_poly(Poly p1, Poly p2)
 {
     Poly result;
 
+    //On prend la taille du plus grand des 2 :
     result.taille = p1.taille > p2.taille ? p1.taille : p2.taille;
 
+    //On additionne terme à terme :
     for (int i = 0; i < result.taille; i++)
     {
         result.coef[i] = p1.coef[i] + p2.coef[i];
@@ -61,15 +63,17 @@ Poly soustraction_poly(Poly p1, Poly p2)
     return result;
 }
 
+//On génère un polynome avec les n coefficients fournis en paramètre d'entrée
 Poly create_poly(int nb_valeurs, double valeur1, ...)
 {
     Poly poly = create_empty(10);
+    // La taille du polynome correspond au nombre d'arguments fournis
     poly.taille = nb_valeurs;
+    
     poly.coef[0] = valeur1;
-
+    //On parcourt les paramètres fournis et on les attribue aux coefficients du polynome
     va_list params;
     va_start(params, valeur1);
-    //printf("\n\n\n");
     for (int i = 1; i < nb_valeurs; ++i)
     {
         double valeur_suiv = va_arg(params, double);
@@ -102,17 +106,19 @@ Poly multiplication_poly(Poly p1, Poly p2)
         for (int a2 = 0; a2 < p2.taille; a2++)
         {
             // On fait une double boucle pour la double distributivitée
-            //On classe les valeurs obtenues par d, degré soit par l'addition de leur rang dans leur liste respective
+            //On classe les valeurs obtenues par d, degré par l'addition de leur rang dans leur liste respective
             d = a1 + a2;
-            //Calcul du terme de de degré d
+            //Calcul du terme de degré d, soit le terme numéro d de la liste coeff
             multiplication.coef[d] = p1.coef[a1] * p2.coef[a2] + multiplication.coef[d];
         }
     }
+    //On renvoit notre polynome résultat
     return multiplication;
 }
 
 Poly create_empty(int taille)
 {
+    // Création d'un polynome vide de taille donnée
     Poly poly;
     poly.taille = taille;
     for (int i = 0; i < 10; i++)
@@ -133,22 +139,26 @@ Poly get_poly_from_str(char str[])
     int max = 0;
 
     char *ptr = strtok(str, delim);
-    //On coupe notre poly à chaque fois que le caractère delim appararaît dans la str
+    //On coupe notre poly à chaque fois que le caractère 'delim' appararaît dans la chaîne str
     while (ptr != NULL)
     {
+        //Si on n'arrive pas à trouver les 2 variables, il s'agit du coefficient de degré 0 du polynome, sinon on extrait le degré et le coefficient
         if (sscanf(ptr, "%lf x^%d", &coef, &rang) < 2)
         {
             sscanf(ptr, "%lf", &coef);
             rang = 0;
         }
+        //On recherche le rang maximum du polynome
         if (rang > max)
         {
             max = rang;
         }
+        //On applique le coefficient récupéré au rang 
         poly[rang] = coef;
+        //On recherche le prochain + dans la chaîne de caractère
         ptr = strtok(NULL, delim);
     }
-
+    // Création du polynome et remplissage avec les informations récupérées
     Poly p1 = create_empty(10);
 
     p1.taille = max + 1;
@@ -159,16 +169,16 @@ Poly get_poly_from_str(char str[])
 
     return p1;
 }
-
+// On imprime le contenu du polynome dans un fichier 
 void poly_to_file(const char *filename, Poly poly)
 {
     FILE *f = fopen(filename, "w");
     if (!f)
     {
-        fprintf(stderr, "cannot open %s\n", filename);
+        fprintf(stderr, "\nCannot open %s\n", filename);
         return;
     }
-
+    //cf fonction printPoly()
     fprintf(f, "\n");
     for (int i = poly.taille - 1; i >= 0; i--)
     {
@@ -194,23 +204,6 @@ void poly_to_file(const char *filename, Poly poly)
     fclose(f);
 }
 
-/*bool open_from_file(const char *filename, char poly[])
-{
-    FILE *f = fopen(filename, "r");
-    if (!f)
-    {
-        return false;
-    }
-
-    //char poly[150];
-    if (f != NULL)
-    {
-        fscanf(f, "%s", poly[0]);
-    }
-
-    fclose(f);
-    return true;
-}*/
 
 double calcul_valeur(double x, Poly poly)
 {
@@ -225,36 +218,22 @@ double calcul_valeur(double x, Poly poly)
     return value;
 }
 
-/*char **get_string_from_file(const char *Filename )
-{
-    
+void get_string_from_file(const char *Filename )
+{    
     FILE *f = fopen(Filename, "r");
-    char str[30];
-    char **lines = (char **)malloc(300);
-    int ch;
-    int linesCount=0;
-    while ((ch = fgetc(f)) != EOF)
-    {
-        if (ch == '\n')
-            linesCount++;
-    }
-
-    int i = 0;
     
+    char str[50];   
 
     if (f)
     {
-
-        for (int i=0;i<linesCount;i++)
+        while (fgets(str, 100, f)!=NULL)
         {
-            //printf("\n%s\n", str);
-            lines[i]=malloc(100);
-            fgets(lines[i], 100, f);
-            printf("%s",lines[i]);
+            printf("\n%s\n", str);
+            Poly p1=get_poly_from_str(str);
+            printPoly(p1);
         }
 
         fclose(f);
-        //ret = true;
     }
-    return lines;
-}*/
+    return ;
+}
