@@ -27,6 +27,6 @@ Poly get_poly_from_str(char[]);
 
 void poly_to_file(const char *,Poly);
 
-bool get_string_from_file(const char *, char*);
+//char** get_string_from_file(const char */*, char**/);
 
 #endif

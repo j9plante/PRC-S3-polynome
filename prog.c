@@ -4,6 +4,8 @@
 
 #include <stdarg.h>
 
+#include <stdlib.h>
+
 #include <math.h>
 
 #include "polynome.h"
@@ -63,6 +65,13 @@ void test_calcul_valeur(double x, Poly p1)
     printf("\nrésultat :%s\n",*poly);
 }*/
 
+void test_create_poly(void)
+{
+    printf("\n~~~~ %s~~~~\n", __func__);
+    Poly p1 = create_poly(6, 2.1, 3.1, 4.1, 5.1, 6.1, 7.1);
+    printPoly(p1);
+}
+
 void test_get_poly_from_str(void)
 {
     printf("\n~~~~ %s~~~~\n", __func__);
@@ -99,17 +108,22 @@ int main(int argc, char **argv)
 
     if (argc == 1)
     {
-        printf("\n-Pour effectuer tout les tests : all\n-Pour additionner 2 polynomes : poly1 add poly2\n-Pour soustraire 2 polynomes : poly1 sous poly2\n-Pour multiplier 2 polynomes : poly1 multi poly2\nFormatage des polynomes ax^n+bx^n-1+...+c\n");
+        printf("\nPour effectuer tout les tests : all");
+        printf("\n-Pour additionner 2 polynomes : poly1 add poly2");
+        printf("\n-Pour soustraire 2 polynomes : poly1 sous poly2");
+        printf("\n-Pour multiplier 2 polynomes : poly1 multi poly2");
+        printf("\n-Formatage des polynomes ax^n+bx^n-1+...+c\n");
     }
 
     if (argc == 2 && strcmp(argv[1], "all") == 0)
     {
-        printf("On fait touts les tests !!!!");
+        printf("On fait touts les tests !!");
 
         test_printPoly(p1);
         test_addition_poly(p1, p2);
         test_soustraction_poly(p1, p2);
         test_multiplication_poly(p1, p2);
+        test_create_poly();
         test_get_poly_from_str();
         test_calcul_valeur(4, p2);
         test_poly_to_file(p1);
@@ -118,7 +132,6 @@ int main(int argc, char **argv)
     {
         Poly p3 = get_poly_from_str(argv[1]);
         printPoly(p3);
-        //printf("%s", argv[1]);
     }
 
     if (argc == 4 && strcmp(argv[2], "add") == 0)
@@ -178,10 +191,16 @@ int main(int argc, char **argv)
 
     //char text="2x^2+3x+3";
 
-    //create_poly(1, 2, 3, 4, 5, 6, 7);
-    /*Poly p4;
+    //Poly p3 = create_poly(6, 2, 3, 4, 5, 6, 7);
+    //printPoly(p3);
+    Poly p4;
     p4=create_poly(3, 14.5, 18.0, 17.5);
-    printPoly(p4);*/
+    printPoly(p4);
+
+    //char ** content=get_string_from_file("test1.txt");
+
+    //printf("%s",*content)
+    //free(content);
 
     return 0;
 }
