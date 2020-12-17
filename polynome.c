@@ -217,7 +217,8 @@ double calcul_valeur(double x, Poly poly)
 
     return value;
 }
-
+//Extrait les polynomes contenues dans un fichier texte.
+//Difficulté à retourner plusieurs string au contexte appelant...
 void get_string_from_file(const char *Filename )
 {    
     FILE *f = fopen(Filename, "r");
