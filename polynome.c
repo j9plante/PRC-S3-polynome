@@ -8,7 +8,7 @@
 
 void printPoly(Poly poly)
 {
-    printf("Fonction : %s", __func__);
+    printf("\nFonction : %s", __func__);
     printf("\n");
     for (int i = poly.taille - 1; i >= 0; i--)
     {
@@ -21,7 +21,7 @@ void printPoly(Poly poly)
             }
             else
             {
-                printf("%gx^(%d)", poly.coef[i], i);
+                printf("%gx^%d", poly.coef[i], i);
             }
 
             if (i != 0 && poly.coef[i] > 0)
@@ -120,7 +120,6 @@ Poly create_empty(int taille)
 
 Poly get_poly_from_str(char str[])
 {
-    //char str[] = "10x^(3)+5x^(2)+7x^(1)+6x^(0)";
     char delim[] = "+";
 
     double poly[10] = {0};
@@ -132,8 +131,11 @@ Poly get_poly_from_str(char str[])
     char *ptr = strtok(str, delim);
     while (ptr != NULL)
     {
-        //printf("%s\n", ptr);
-        sscanf(ptr, "%lf x^(%d)", &coef, &rang);
+        if (sscanf(ptr, "%lf x^%d", &coef, &rang)<2)
+        {
+            sscanf(ptr, "%lf", &coef);
+            rang=0;
+        }
         if (rang > max)
         {
             max = rang;
@@ -176,7 +178,7 @@ void poly_to_file(const char * filename,Poly poly)
             }
             else
             {
-                fprintf(f,"%gx^(%d)", poly.coef[i], i);
+                fprintf(f,"%gx^%d", poly.coef[i], i);
             }
 
             if (i != 0 && poly.coef[i] > 0)
